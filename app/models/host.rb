@@ -1,0 +1,2 @@
+class Host < Organiztion
+end

@@ -18,7 +18,7 @@ RSpec.describe Event, type: :model do
     end
   end
 
-  describe '.recent' do
+  describe 'class_methods' do
     let(:org1) { Organization.create!(name: 'New Relic') }
     let(:host1) { Host.create!(organization: org1, name: 'server 1') }
     let(:host2) { Host.create!(organization: org1, name: 'server 2') }
@@ -65,18 +65,42 @@ RSpec.describe Event, type: :model do
       )
     end
 
-    it 'returns events for the organization only' do
-      expect(
-        described_class.recent(3, org1.id)
-      ).to match_array(
-        [event1, event3, event4]
-      )
+    describe '.recent' do
+      it 'returns events for the organization only' do
+        expect(
+          described_class.recent(3, org1.id)
+        ).to match_array(
+          [event1, event3, event4]
+        )
 
-      expect(
-        described_class.recent(3, org2.id)
-      ).to match_array(
-        [event2]
-      )
+        expect(
+          described_class.recent(3, org2.id)
+        ).to match_array(
+          [event2]
+        )
+      end
+    end
+
+    describe '.by_host' do
+      it 'returns events for the organization and host only' do
+        expect(
+          described_class.by_host(3, host1.id, org1.id)
+        ).to match_array(
+          [event1]
+        )
+
+        expect(
+          described_class.by_host(3, host2.id, org1.id)
+        ).to match_array(
+          [event3]
+        )
+
+        expect(
+          described_class.by_host(3, host4.id, org2.id)
+        ).to match_array(
+          [event2]
+        )
+      end
     end
   end
 end

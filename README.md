@@ -12,7 +12,7 @@ For each host within an organization, events should be storable and retrievable.
 
   - organization_id
 
-Events can come from multiple orgs and Org can have multiple hosts.
+Events can come from multiple organizations and an organization can have multiple hosts.
 
 ### Application Prerequisites:
 
